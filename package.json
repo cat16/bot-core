@@ -25,7 +25,7 @@
     "chalk": "^2.3.2",
     "eris": "^0.8.3",
     "readline-sync": "^1.4.7",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@types/node": "^9.4.7",
