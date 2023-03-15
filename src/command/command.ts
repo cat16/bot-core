@@ -13,7 +13,11 @@ export interface RunContext<A extends Args, CL extends ContextList> {
 export interface RunFunc<A extends Args, CL extends ContextList> {
     (
         context: RunContext<A, CL>,
-    ): string | Promise<string> | void | Promise<void>;
+    ):
+        | string
+        | void
+        | undefined
+        | Promise<string | void | undefined>
 }
 
 export interface Command {

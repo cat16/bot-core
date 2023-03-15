@@ -4,7 +4,7 @@ import { service } from "./desc.ts";
 
 const enabled_bots: Bot[] = [];
 
-export const CONSOLE_SERVICE = service({
+export const STDIN_SERVICE = service({
     start(bot) {
         enabled_bots.push(bot);
         return bot;
@@ -14,7 +14,7 @@ export const CONSOLE_SERVICE = service({
     },
 });
 
-export const CONSOLE_CONTEXT = context_type<Record<string, never>>();
+export const STDIN_CONTEXT = context_type<Record<string, never>>("stdin");
 
 export function take_stdin() {
     const decoder = new TextDecoder();
@@ -25,7 +25,7 @@ export function take_stdin() {
                 const result = await bot.handle_text({
                     bot,
                     text,
-                    context: CONSOLE_CONTEXT.create({}),
+                    context: STDIN_CONTEXT.create({}),
                 });
                 console.log(result);
             });

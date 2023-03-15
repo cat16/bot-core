@@ -3,7 +3,7 @@ import { Bot } from "./bot.ts";
 import { Command } from "./command/command.ts";
 import { load_commands } from "./command/load.ts";
 import { add_module, Module } from "./module.ts";
-import { CONSOLE_SERVICE } from "./service/console.ts";
+import { STDIN_SERVICE } from "./service/console.ts";
 import { load_services } from "./service/load.ts";
 import { Service, service_from_desc } from "./service/service.ts";
 
@@ -23,7 +23,7 @@ export async function load_bot(
     const core: Module = {
         name: "core",
         commands: [],
-        services: [service_from_desc(CONSOLE_SERVICE, "console")],
+        services: [service_from_desc(STDIN_SERVICE, "console")],
     };
     add_module(bot, core);
     await Promise.all([
