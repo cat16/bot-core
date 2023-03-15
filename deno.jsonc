@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "cd test && deno run -A ./main.ts"
+  },
+  "fmt": {
+    "options": {
+      "indentWidth": 4
+    }
+  }
+}
