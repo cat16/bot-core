@@ -49,8 +49,8 @@ export async function load_mods(
     const data = new Map();
     for await (const entry of Deno.readDir(path)) {
         if (!entry.isFile) continue;
-        path = path_util.join(path, entry.name);
-        const { success, data: mod } = await reloadable_import(path);
+        const mpath = path_util.join(path, entry.name);
+        const { success, data: mod } = await reloadable_import(mpath);
         if (!success) {
             error_cb(mod);
             continue;

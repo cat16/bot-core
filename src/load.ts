@@ -19,7 +19,7 @@ export async function load_bot(
     bot: Bot,
     dir: string,
 ) {
-    create_dirs(dir);
+    await create_dirs(dir);
     const core: Module = {
         name: "core",
         commands: [],

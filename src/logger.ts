@@ -28,8 +28,9 @@ export const DEFAULT_LOGGER: Logger = {
 
 function default_log(type: LogType, data: unknown) {
     const t = LOG_TYPES[type];
+    const msg = typeof data === "string" ? data : Deno.inspect(data);
     t.fn(
-        `[%c${date_str()}%c] [%c${type}%c]: %c${data}`,
+        `[%c${date_str()}%c] [%c${type}%c]: %c${msg}`,
         "color: gray",
         "",
         t.label ?? "",

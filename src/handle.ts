@@ -7,9 +7,14 @@ export interface TextHandler {
     (data: TextHandlerInput): Promise<TextHandlerOutput>;
 }
 
-export type TextHandlerInput = { bot: Bot; text: string, context: Context<unknown> };
+export type TextHandlerInput = {
+    bot: Bot;
+    text: string;
+    context: Context<unknown>;
+};
 export type TextHandlerOutput = {
     result: "success";
+    command: Command;
     response: string | undefined;
 } | {
     result: "no command" | "unknown command";
@@ -85,7 +90,7 @@ export const DEFAULT_TEXT_HANDLER = async function (
         if (result.status === "fail") {
             return {
                 result: "bad argument",
-                reason: result.reason
+                reason: result.reason,
             };
         }
     }
@@ -95,8 +100,8 @@ export const DEFAULT_TEXT_HANDLER = async function (
         args: {},
         rest,
         context: context,
-        bot
+        bot,
     }) ?? undefined;
 
-    return { result: "success", response };
+    return { result: "success", response, command };
 };
