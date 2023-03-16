@@ -1,4 +1,4 @@
-import { path_util } from "../../lib.ts";
+import { path_util } from "../../deps.ts";
 import { is_object } from "./general.ts";
 
 const loaded_dirs = new Set();

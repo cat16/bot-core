@@ -1,4 +1,4 @@
-import { path_util } from "../lib.ts";
+import { path_util } from "../deps.ts";
 import { Bot } from "./bot.ts";
 import { Command } from "./command/command.ts";
 import { load_commands } from "./command/load.ts";
