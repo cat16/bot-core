@@ -1,6 +1,7 @@
 import { Bot } from "./bot.ts";
 import { Command } from "./command/command.ts";
 import { Service } from "./service/service.ts";
+import { insert } from "./util/general.ts";
 
 export interface Module {
     name: string;
@@ -29,41 +30,32 @@ export function add_module(bot: Bot, module: Module) {
         names.push(command.name);
         // add
         bot.commands.set(module.name + "." + command.name, command);
-        for (const name of [
-            command.name,
-            ...command.aliases
-        ]) {
-            const arr = bot.command_map.get(name) ?? [];
-            arr.push(command);
-            bot.command_map.set(name, arr);
-        }
-    }
-}
-
-export function remove_module(bot: Bot, module: Module) {
-    let name = module.name;
-    if (bot.modules.has(name)) {
-        let num = 0;
-        while (bot.modules.has(name + num)) num++;
-        name = name + num;
-    }
-    bot.modules.set(name, module);
-    for (const command of module.commands) {
-        let full = name + "." + command.name;
-        if (bot.commands.has(full)) {
-            let num = 0;
-            while (bot.modules.has(full + num)) num++;
-            full = full + num;
-        }
-        bot.commands.set(full, command);
-
-        for (const name of [
-            command.name,
-            ...command.aliases
-        ]) {
-            const arr = bot.command_map.get(name) ?? [];
-            arr.push(command);
-            bot.command_map.set(name, arr);
+        for (
+            const name of [
+                command.name,
+                ...command.aliases,
+            ]
+        ) {
+            const spaces = name.includes(" ");
+            if (
+                spaces &&
+                !bot.commands_spaces.some(({ name: n }) => n === name)
+            ) {
+                insert(
+                    bot.commands_spaces,
+                    { command, name },
+                    (a, b) => a.name.length - b.name.length,
+                );
+                continue;
+            }
+            if (!spaces && !bot.command_map.has(name)) {
+                bot.command_map.set(name, command);
+                continue;
+            }
+            bot.logger.warn(
+                "duplicate command name/alias '" + name +
+                    "', not adding to maps",
+            );
         }
     }
 }

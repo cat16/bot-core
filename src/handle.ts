@@ -19,9 +19,6 @@ export type TextHandlerOutput = {
 } | {
     result: "no command" | "unknown command";
 } | {
-    result: "multiple commands";
-    commands: Command[];
-} | {
     result: "missing arguments";
     args: Arg[];
 } | {
@@ -43,14 +40,18 @@ export const DEFAULT_TEXT_HANDLER = async function (
     let command = bot.commands.get(cmd);
 
     if (command === undefined) {
-        const commands = bot.command_map.get(cmd) ?? [];
-        if (commands.length === 0) {
-            return { result: "unknown command" };
+        for (const {name, command: cmd2} of bot.commands_spaces) {
+            if (text.startsWith(name)) {
+                command = cmd2;
+                break;
+            }
         }
-        if (commands.length > 1) {
-            return { result: "multiple commands", commands };
-        }
-        command = commands[0];
+    }
+
+    command ??= bot.command_map.get(cmd);
+
+    if (command === undefined) {
+        return { result: "unknown command" };
     }
 
     // split into args respecting quotes

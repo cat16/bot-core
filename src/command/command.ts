@@ -36,12 +36,12 @@ export function command_from_desc(
 ): Command {
     return {
         name: desc.name ?? name,
-        aliases: [],
+        aliases: desc.aliases ?? [],
         args: Object.entries(desc.args ?? {}).map(([name, a]) => ({
             name,
             parse: a.parse,
         })),
-        contexts: [],
+        contexts: desc.contexts ?? [],
         run: desc.run,
         path,
     };

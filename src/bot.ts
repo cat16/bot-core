@@ -4,12 +4,18 @@ import { DEFAULT_LOGGER, Logger } from "./logger.ts";
 import { Module } from "./module.ts";
 import { Service } from "./service/service.ts";
 
+export type CmdsWithSpaces = {
+    name: string,
+    command: Command
+}[];
+
 export interface Bot {
     logger: Logger
     modules: Map<string, Module>;
     enabled_services: { service: Service; data: unknown }[];
     commands: Map<string, Command>;
-    command_map: Map<string, Command[]>;
+    command_map: Map<string, Command>;
+    commands_spaces: CmdsWithSpaces;
     handle_text: TextHandler
 }
 
@@ -20,6 +26,7 @@ export function create_bot(): Bot {
         enabled_services: [],
         commands: new Map(),
         command_map: new Map(),
+        commands_spaces: [],
         handle_text: DEFAULT_TEXT_HANDLER,
     };
     return bot;
