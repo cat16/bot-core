@@ -3,11 +3,16 @@ import { ContextFrom, ContextList } from "../context/context.ts";
 import { Arg, Args, ConvertedArgs } from "./arg.ts";
 import { CommandDescription } from "./desc.ts";
 
+export interface ReplyFunc {
+    (msg: string): void | unknown | Promise<void | unknown>;
+}
+
 export interface RunContext<A extends Args, CL extends ContextList> {
     args: ConvertedArgs<A>;
     rest: string;
     context: ContextFrom<CL>;
     bot: Bot;
+    reply: ReplyFunc;
 }
 
 export interface RunFunc<A extends Args, CL extends ContextList> {
@@ -17,7 +22,7 @@ export interface RunFunc<A extends Args, CL extends ContextList> {
         | string
         | void
         | undefined
-        | Promise<string | void | undefined>
+        | Promise<string | void | undefined>;
 }
 
 export interface Command {

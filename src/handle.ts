@@ -1,6 +1,6 @@
 import { Bot } from "./bot.ts";
 import { Arg } from "./command/arg.ts";
-import { Command } from "./command/command.ts";
+import { Command, ReplyFunc } from "./command/command.ts";
 import { Context } from "./context/context.ts";
 
 export interface TextHandler {
@@ -11,6 +11,7 @@ export type TextHandlerInput = {
     bot: Bot;
     text: string;
     context: Context<unknown>;
+    reply: ReplyFunc;
 };
 export type TextHandlerOutput = {
     result: "success";
@@ -27,7 +28,7 @@ export type TextHandlerOutput = {
 };
 
 export const DEFAULT_TEXT_HANDLER = async function (
-    { bot, text, context }: TextHandlerInput,
+    { bot, text, context, reply }: TextHandlerInput,
 ): Promise<TextHandlerOutput> {
     text = text.trim();
     const words = text.split(" ");
@@ -40,9 +41,10 @@ export const DEFAULT_TEXT_HANDLER = async function (
     let command = bot.commands.get(cmd);
 
     if (command === undefined) {
-        for (const {name, command: cmd2} of bot.commands_spaces) {
-            if (text.startsWith(name)) {
+        for (const { name, command: cmd2 } of bot.commands_spaces) {
+            if (text.toLowerCase().startsWith(name)) {
                 command = cmd2;
+                words.splice(0, name.split(" ").length - 1)
                 break;
             }
         }
@@ -102,6 +104,7 @@ export const DEFAULT_TEXT_HANDLER = async function (
         rest,
         context: context,
         bot,
+        reply,
     }) ?? undefined;
 
     return { result: "success", response, command };

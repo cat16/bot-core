@@ -26,6 +26,7 @@ export function take_stdin() {
                     bot,
                     text,
                     context: STDIN_CONTEXT.create({}),
+                    reply: console.log,
                 });
                 console.log(result);
             });
