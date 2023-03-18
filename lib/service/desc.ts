@@ -18,3 +18,10 @@ export function service<D>(
 }
 
 export const is_service_desc = is_func<ServiceDescription>(SERVICE_TYPE);
+
+export function service_from_desc(desc: ServiceDescription, name: string) {
+    return {
+        name,
+        start: desc.start,
+    };
+}

@@ -1,7 +1,7 @@
 import { Bot } from "./bot.ts";
 import { Arg } from "./command/arg.ts";
 import { Command, ReplyFunc } from "./command/command.ts";
-import { Context } from "./context/context.ts";
+import { Context } from "./command/context.ts";
 
 export interface TextHandler {
     (data: TextHandlerInput): Promise<TextHandlerOutput>;

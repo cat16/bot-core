@@ -1,6 +1,6 @@
 import { ErrorCB, load_mods } from "../util/reload.ts";
-import { is_service_desc } from "./desc.ts";
-import { Service, service_from_desc } from "./service.ts";
+import { is_service_desc, service_from_desc } from "./desc.ts";
+import { Service } from "./service.ts";
 
 export async function load_services(
     path: string,

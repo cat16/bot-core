@@ -1,6 +1,4 @@
-import { Bot } from "../bot.ts";
-import { context_type } from "../context/context.ts";
-import { service } from "./desc.ts";
+import { Bot, context_type, service } from "../deps.ts";
 
 const enabled_bots: Bot[] = [];
 

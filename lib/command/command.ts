@@ -1,7 +1,6 @@
 import { Bot } from "../bot.ts";
-import { ContextFrom, ContextList } from "../context/context.ts";
+import { ContextFrom, ContextList } from "./context.ts";
 import { Arg, Args, ConvertedArgs } from "./arg.ts";
-import { CommandDescription } from "./desc.ts";
 
 export interface ReplyFunc {
     (msg: string): void | unknown | Promise<void | unknown>;
@@ -32,22 +31,4 @@ export interface Command {
     contexts: ContextList;
     run: RunFunc<Args, ContextList>;
     path: string;
-}
-
-export function command_from_desc(
-    desc: CommandDescription,
-    name: string,
-    path: string,
-): Command {
-    return {
-        name: desc.name ?? name,
-        aliases: desc.aliases ?? [],
-        args: Object.entries(desc.args ?? {}).map(([name, a]) => ({
-            name,
-            parse: a.parse,
-        })),
-        contexts: desc.contexts ?? [],
-        run: desc.run,
-        path,
-    };
 }

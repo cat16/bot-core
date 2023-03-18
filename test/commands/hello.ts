@@ -1,4 +1,4 @@
-import { command } from "../lib.ts";
+import { command } from "../deps.ts";
 
 export default command({
     run({ bot }) {
